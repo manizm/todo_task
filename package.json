@@ -1,0 +1,31 @@
+{
+  "name": "todo_task",
+  "version": "1.0.0",
+  "description": "Todo task manager app using MEAN stack with passport.js authentication and websockets",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manizm/todo_task.git"
+  },
+  "keywords": [
+    "Angular",
+    "MEAN",
+    "MongoDB",
+    "Node",
+    "Express",
+    "websockets",
+    "passport",
+    "todo",
+    "tasks"
+  ],
+  "author": "Mali Naeemi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manizm/todo_task/issues"
+  },
+  "homepage": "https://github.com/manizm/todo_task#readme",
+  "dependencies": {}
+}

@@ -1,0 +1,13 @@
+#TODO
+- [ ] Setup webpack module
+- [ ] Setup basic file structure for angular and its controllers
+- [ ] Setup express
+- [ ] Setup routes
+- [ ] Setup passport.js
+- [ ] Setup Mongodb _(Local or mlab?)_
+- [ ] Create Mongoose Models/Schemas
+- [ ] Setup CRUD operations
+- [ ] Connect with front-end _(Angular Controllers)_
+- [ ] test
+- [ ] Integrate Socket.io **Q_Q**
+- [ ] Fingers Crossed!
