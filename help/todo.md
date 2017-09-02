@@ -1,5 +1,5 @@
 #TODO
-- [ ] Setup webpack module
+- [x] ~~Setup webpack module~~
 - [ ] Setup basic file structure for angular and its controllers
 - [ ] Setup express
 - [ ] Setup routes

@@ -4,7 +4,10 @@
   "description": "Todo task manager app using MEAN stack with passport.js authentication and websockets",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server",
+    "prod": "npm run clean && cross-env NODE_ENV=production webpack -p",
+    "start": "node ./bin/www",
+    "clean": "rimraf ./dist/*"
   },
   "repository": {
     "type": "git",
@@ -27,5 +30,41 @@
     "url": "https://github.com/manizm/todo_task/issues"
   },
   "homepage": "https://github.com/manizm/todo_task#readme",
-  "dependencies": {}
+  "dependencies": {
+    "async": "^2.5.0",
+    "bluebird": "^3.5.0",
+    "body-parser": "~1.17.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "es6-promise": "^4.1.1",
+    "express": "~4.15.2",
+    "moment": "^2.18.1",
+    "mongoose": "^4.11.8",
+    "morgan": "~1.8.1",
+    "pug": "~2.0.0-beta11",
+    "serve-favicon": "~2.4.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^0.11.2",
+    "html-webpack-plugin": "^2.30.1",
+    "node-sass": "^4.5.3",
+    "purify-css": "^1.2.5",
+    "purifycss-webpack": "^0.7.0",
+    "rimraf": "^2.6.1",
+    "sass-loader": "^6.0.6",
+    "start-server-webpack-plugin": "^2.2.0",
+    "style-loader": "^0.18.2",
+    "svg-inline-loader": "^0.8.0",
+    "webpack": "^3.5.5",
+    "webpack-dev-middleware": "^1.12.0",
+    "webpack-dev-server": "^2.7.1",
+    "webpack-hot-middleware": "^2.18.2",
+    "webpack-node-externals": "^1.6.0"
+  }
 }
