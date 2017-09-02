@@ -1,0 +1,1 @@
+SET DEBUG=todo-task:* & npm start
