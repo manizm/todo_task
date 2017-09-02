@@ -11,7 +11,7 @@ This app will use:
 * socket.io _(for realtime changes)_
 
 ### Todo.md
-I will be making a todo.md file (checklist file - how ironical Mani!) where you can check the development process and what I have completed so far
+I will be making a todo.md file (checklist file - how ironical Mani!) where you can check the development process and what I have completed so far. **Please check help folder**
 
 ### Suggestions
 If you have any suggestions, feel free to shout it out!
