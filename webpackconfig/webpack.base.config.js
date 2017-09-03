@@ -17,7 +17,8 @@ const webpackConfig = {
   
   output: {
     path: DIST_DIR,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath:'/'
   },
   
   devtool: "inline-source-map",
@@ -28,6 +29,11 @@ const webpackConfig = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: 'babel-loader'
+      },
+      {
+        test: /\.(css)$/,
+        exclude: /node_modules/,
+        use: 'autoprefixer'
       },
       {
         test: /\.(scss|sass)$/,
@@ -41,6 +47,10 @@ const webpackConfig = {
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         use: 'file-loader?name=[name].[ext]&outputPath=images/'
+      },
+      {
+        test: /\.html$/,
+        use: 'raw-loader'
       }
     ]
   },

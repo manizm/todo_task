@@ -1,13 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myapp">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>My App</title>
 </head>
-<body>
+<body ng-controller="HelloController">
   <h1>Content goes here!ss!</h1>
   <img src="./images/logo.jpg" alt="awesome logo">
+  <h2>Hello World!!</h2>
+  <label>Name:</label>
+  <input type="text" ng-model="yourName" placeholder="Enter your name">
+  <hr>
+  
+  <h1>Hello {{yourName}}</h1>
+  <hr>
+
+  <h2>Welcome {{helloTo.title}} to the world of Tutorials!!HAY</h2>
 </body>
 </html>

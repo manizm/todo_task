@@ -5,7 +5,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const glob = require('glob')
 const PurifyCSSPlugin = require('purifycss-webpack')
-
+const raw = require('raw-loader')
 
 /* Set true if NODE_ENV argument passed to npm script is "production" */
 const varisProd = process.env.NODE_ENV === 'production'
@@ -31,7 +31,8 @@ const plugobj = {
     new HtmlWebpackPlugin({
       title: 'My App',
       template: './index.html',
-      hash: true
+      hash: true,
+      inject: true
     }),
     
     new ExtractTextPlugin({
@@ -46,6 +47,6 @@ const plugobj = {
   
   ]
 }
-
+console.log(plugobj.cssConfig)
 
 module.exports = plugobj
