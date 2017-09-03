@@ -18,7 +18,7 @@ const varcssDev = ['style-loader', 'css-loader', 'sass-loader']
 const varcssProd = ExtractTextPlugin.extract({
   fallback: 'style-loader',
   use: ['css-loader', 'sass-loader'],
-  publicPath: '/dist/'
+  publicPath: './'
 })
 
 // plguin object - we export this to base webpack config file
