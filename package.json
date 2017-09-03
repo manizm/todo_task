@@ -4,9 +4,22 @@
   "description": "Todo task manager app using MEAN stack with passport.js authentication and websockets",
   "main": "app.js",
   "scripts": {
+<<<<<<< HEAD
     "dev": "webpack-dev-server",
     "prod": "npm run clean && cross-env NODE_ENV=production webpack -p",
     "start": "node ./bin/www",
+=======
+    "dev": "concurrently --kill-others \"webpack-dev-server --host 0.0.0.0\" \"npm run docs\"",
+    "docs_gen": "jsdoc -r -d jsdoc_output/ public/",
+    "docs_watch": "watch \"npm run docs_gen\" public",
+    "docs_serve": "echo Docs are being served on port 8082! && live-server -q --port=8082 --no-browser jsdoc_output/",
+    "docs": "concurrently --kill-others \"npm run docs_serve\" \"npm run docs_watch\"",
+    "postinstall": "bower install",
+    "webpack": "webpack",
+    "test": "mocha-webpack public/**/*.spec.js",
+    "start": "node ./bin/www",
+    "startprod": "cross-env NODE_ENV=production node ./bin/www",
+>>>>>>> master
     "clean": "rimraf ./dist/*"
   },
   "repository": {
@@ -45,6 +58,7 @@
     "serve-favicon": "~2.4.2"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
@@ -64,6 +78,36 @@
     "webpack": "^3.5.5",
     "webpack-dev-middleware": "^1.12.0",
     "webpack-dev-server": "^2.7.1",
+=======
+    "angular": "^1.6.4",
+    "babel-cli": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^3.5.0",
+    "concurrently": "^3.4.0",
+    "css-loader": "^0.28.0",
+    "inject-loader": "^3.0.0",
+    "live-server": "^1.2.0",
+    "mocha": "^3.2.0",
+    "mocha-webpack": "^0.7.0",
+    "node-sass": "^4.5.2",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^6.0.3",
+    "sinon": "^2.1.0",
+    "style-loader": "^0.16.1",
+    "watch": "^1.0.2",
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2",
+    "cross-env": "^5.0.5",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^0.11.2",
+    "html-webpack-plugin": "^2.30.1",
+    "rimraf": "^2.6.1",
+    "start-server-webpack-plugin": "^2.2.0",
+    "svg-inline-loader": "^0.8.0",
+    "webpack-dev-middleware": "^1.12.0",
+>>>>>>> master
     "webpack-hot-middleware": "^2.18.2",
     "webpack-node-externals": "^1.6.0"
   }
