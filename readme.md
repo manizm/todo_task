@@ -15,3 +15,13 @@ I will be making a todo.md file (checklist file - how ironical Mani!) where you 
 
 ### Suggestions
 If you have any suggestions, feel free to shout it out!
+
+### Installation
+
+1. `npm install`
+
+2. **For static dev server** `npm run dev`
+
+3. **For dev server using express** `SET DEBUG=todo-task:* & npm start`
+
+_I would recommend using 3rd command instead of 2nd. Besides, both of them use hot module replacement_
