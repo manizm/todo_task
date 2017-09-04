@@ -1,16 +1,12 @@
-if (isDevelopment) {const selffile = require('./index.html')}
-const css = require('./styles/app.style.scss')
-const logoimg = require('./images/logo.jpg')
-const angular = require('angular')
+import angular from 'angular'
+import uiRouter from 'angular-ui-router'
+import appModule from './config/main_config'
+import navController from './navDirective/mainController'
+import navDirective from './navDirective/navDirective'
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
+// import bulma from 'bulma'
+import css from './styles/app.style.sass'
 
-let imgTag = document.querySelector('img')
-imgTag.src = logoimg
 
-console.log("Hey webpack! and App.js something!")
-angular.module("myapp", [])
-.controller("HelloController", function($scope) {
-  $scope.helloTo = {}
-  $scope.helloTo.title = "AngularJS"
-})
+appModule.controller('navcontroller', navController)
+appModule.directive('customnav', () => new navDirective)

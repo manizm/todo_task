@@ -14,9 +14,9 @@ baseConfig.devServer = {
   hot: true,
   inline: true,
   open: true,
-  // proxy: {
-  //   '*': 'http://localhost:3000',
-  // },
+  proxy: {
+    '*': 'http://localhost:3000',
+  }
 }
 
 
@@ -28,11 +28,11 @@ baseConfig.plugins = [
     inject: true
   }),
   
-  new ExtractTextPlugin({
-    filename: 'style.css',
-    disable: !varisProd,
-    allChunks: true
-  }),
+  // new ExtractTextPlugin({
+  //   filename: 'style.css',
+  //   disable: !varisProd,
+  //   allChunks: true
+  // }),
   new webpack.optimize.OccurrenceOrderPlugin(),
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NamedModulesPlugin(),

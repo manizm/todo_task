@@ -14,10 +14,10 @@ const varisProd = process.env.NODE_ENV === 'production'
 ** Setting Extract text plugin for css hot module reloading
 ** differently on production and dev environment 
 */
-const varcssDev = ['style-loader', 'css-loader', 'sass-loader']
+const varcssDev = ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader']
 const varcssProd = ExtractTextPlugin.extract({
   fallback: 'style-loader',
-  use: ['css-loader', 'sass-loader'],
+  use: ['css-loader', 'sass-loader', 'postcss-loader'],
   publicPath: './'
 })
 
@@ -27,11 +27,21 @@ const plugobj = {
   cssConfig: varisProd ? varcssProd : varcssDev,
   
   plugins: [
-    
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: {
+    //     warnings: false
+    //   }
+    // }),
+
     new HtmlWebpackPlugin({
       title: 'My App',
       template: './index.html',
-      hash: true,
       inject: true
     }),
     
@@ -44,9 +54,8 @@ const plugobj = {
     new PurifyCSSPlugin({
       paths: glob.sync(path.join(__dirname, '../src/*.html'))
     })
-  
   ]
 }
-console.log(plugobj.cssConfig)
+// console.log(plugobj.cssConfig)
 
 module.exports = plugobj

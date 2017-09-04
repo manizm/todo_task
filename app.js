@@ -2,11 +2,6 @@ const express = require('express');
 const path = require('path');
 
 
-const webpack = require('webpack')
-const webpackDevMiddleware = require('webpack-dev-middleware')
-const webpackHotMiddleware = require('webpack-hot-middleware')
-const config = require('./webpackconfig/webpack.dev.config')
-
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -21,9 +16,7 @@ const app = express();
 const DIST_DIR = path.join(__dirname, 'dist')
 const HTML_FILE = path.join(DIST_DIR, 'index.html')
 const isDevelopment = process.env.NODE_ENV !== 'production'
-const compiler = webpack(config)
-const devMiddleWare = webpackDevMiddleware(compiler)
-console.log(config.output.publicPath)
+
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
@@ -41,7 +34,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 if (isDevelopment) {
-  
+  const webpack = require('webpack')
+  const webpackDevMiddleware = require('webpack-dev-middleware')
+  const webpackHotMiddleware = require('webpack-hot-middleware')
+  const config = require('./webpackconfig/webpack.dev.config')
+  const compiler = webpack(config)
+  const devMiddleWare = webpackDevMiddleware(compiler)
   app.use(webpackDevMiddleware(compiler, {
     publicPath: config.output.publicPath,
     stats: {
