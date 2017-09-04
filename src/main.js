@@ -5,7 +5,7 @@ import navController from './navDirective/mainController'
 import navDirective from './navDirective/navDirective'
 
 // import bulma from 'bulma'
-import css from './styles/app.style.sass'
+import css from './assets/styles/app.style.sass'
 
 
 appModule.controller('navcontroller', navController)
