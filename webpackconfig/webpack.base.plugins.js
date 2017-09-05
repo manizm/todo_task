@@ -14,10 +14,10 @@ const varisProd = process.env.NODE_ENV === 'production'
 ** Setting Extract text plugin for css hot module reloading
 ** differently on production and dev environment 
 */
-const varcssDev = ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader']
+const varcssDev = ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
 const varcssProd = ExtractTextPlugin.extract({
   fallback: 'style-loader',
-  use: ['css-loader', 'sass-loader', 'postcss-loader'],
+  use: ['css-loader', 'postcss-loader', 'sass-loader'],
   publicPath: './'
 })
 

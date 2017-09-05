@@ -3,9 +3,10 @@ import uiRouter from 'angular-ui-router'
 import appModule from './config/main_config'
 import navController from './navDirective/mainController'
 import navDirective from './navDirective/navDirective'
-
 // import bulma from 'bulma'
-import css from './assets/styles/app.style.sass'
+import 'font-awesome-sass-loader'
+import './assets/styles/app.style.sass'
+
 
 
 appModule.controller('navcontroller', navController)

@@ -1,1 +1,42 @@
-@import "~bulma"
+@import ~bulma/bulma
+
+.button
+  transition: .1s all ease-in-out
+  &.is-warning
+    &:hover
+      background-color: darken($warning, 20%)
+  &.is-danger
+    &:hover
+      background-color: darken($danger, 20%)
+
+.isCompleted
+  text-decoration: line-through
+
+.actions
+  .button
+    margin-right: 1rem
+
+.no-collape
+  min-width: 680px
+
+.is-overflow
+  overflow: auto !important
+
+.modal-active
+  display: flex
+
+.modal-content
+  input
+    margin-bottom: 1rem
+
+.super-big-font
+  font-size: 10rem
+  i
+    font-size: inherit
+
+// TODO: CHANGE IT TO SINGLE VALUE LATER ON
+@for $i from 1 through 10
+  .is-wide-#{$i * 10}
+    width: 10% * $i
+    min-width: 300px
+

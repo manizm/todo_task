@@ -17,7 +17,7 @@ I will be making a todo.md file (checklist file - how ironical Mani!) where you 
 If you have any suggestions, feel free to shout it out!
 
 ### Installation
-##### Requirements: _Node v6.11.1+, npm version 3.10.10+
+##### Requirements: _Node v6.11.1+, npm version 3.10.10+_
 
 1. `npm install`
 
