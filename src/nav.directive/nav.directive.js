@@ -1,7 +1,7 @@
 class NavBar {
   constructor($interval) {
     this.restrict = 'E'
-    this.template = require('./navDirective.html')
+    this.template = require('./nav.directive.html')
 
     this.scope = {pageis: '=pagename'}
   }
