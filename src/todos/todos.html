@@ -1,6 +1,3 @@
-<div class="container">
-  <customnav pagename="todos"></customnav>
-</div>
 
 <section class="hero is-primary is-bold">
   <div class="hero-body">
@@ -38,11 +35,13 @@
 </div>
 
 <section class="section columns is-centered" ng-if="todos.length > 0">
-  <table class="table is-narrow column is-12-mobile is-12-tablet is-10-desktop is-overflow">  
+  <table class="table is-narrow column is-12-mobile is-12-tablet is-10-desktop is-overflow-x">  
     <thead>
       <tr>
         <th>Completed?</th>
         <th>Task</th>
+        <th>Delegated By</th>
+        <th>Delegated To</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -57,18 +56,21 @@
           >
         </td>
         <td class="is-wide-70" ng-class="{isCompleted:todo.isCompleted}">{{todo.task}}</td>
+        <td class="is-wide-15">{{todo.delegatedBy}}</td>
+        <td class="is-wide-15">{{todo.delegatedTo}}</td>
         <td>
           <div class="field is-grouped actions">
+            <userdropdown task='todo'></userdropdown>
             <button 
               class="button is-warning" 
               ng-click="editTask(todo)">
-                <span>Edit Task</span>
+                <span>Edit</span>
                 <span class="icon"><i class="fa fa-pencil"></i></span>
             </button>
             <button 
               class="button is-danger" 
               ng-click="removeTask(todo)">
-                <span>Remove Task</span>
+                <span>Remove</span>
                 <span class="icon"><i class="fa fa-remove"></i></span>
               </button>
           </div>

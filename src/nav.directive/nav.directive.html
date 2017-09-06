@@ -1,32 +1,33 @@
 <nav class="level navbar">
-  <div class="level-left"><a ui-sref="todos" ng-click="changePage()" class="level-item">Home</a></div>
+  <div class="level-left"><a ui-sref="todos" ng-click="authenticatetodo()" class="level-item">Home</a></div>
   <div class="level-right">
     
-    <a ng-show="page === 'login'"
-       ng-click="checkisForgotPassword()" 
+    <a ng-hide="authenticated"
+       ui-sref="forgotpassword"
+       ng-click="authenticateauth()"
        class="level-item">
          Forgot your password?
     </a>
     
-    <a ng-show="page !== 'todos'" 
-       ng-click="showLogin()"
-       ui-sref="login" 
+    <a ng-hide="authenticated"
+       ui-sref="login"
+       ng-click="authenticateauth()"
        class="level-item button is-primary">
          Login
     </a>
 
-    <a ng-show="page !== 'todos'" 
-       ng-click="checkisSignup()" 
+    <a ng-hide="authenticated"
+       ng-click="authenticateauth()"
+       ui-sref="signup"
        class="level-item button is-success">
          Sign Up
     </a>
 
-    <a ng-show="page === 'todos'" 
-       ng-click="changePage()"
+    <a ng-show="authenticated"
+       ng-click="authenticateauth()"
        ui-sref="login" 
        class="level-item is-success">
          Logout
     </a>
-    <!-- <a ng-click="showPage()">Show Page</a> -->
   </div>
 </nav>

@@ -31,6 +31,13 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
       .filter(item => item !== todo)
   }
 
+  // delegates task to another user
+  function delegateTask($scope, task, user) {
+    task.delegatedTo = user
+    $scope.isDropdown = false
+  }
+
+  // Watches task input in add task field and adds its to the list
   function watchCreateTaskInput($scope, dirtyInput, val) {
     // removes last letter from input
     
@@ -40,7 +47,7 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
     } 
     // pushes the task in todo list
     else if (val && !dirtyInput.isDirty) {
-      $scope.todos.push({ task: val, isCompleted: false })
+      $scope.todos.push({ username: $scope.username, delegatedBy: $scope.username, task: val, isCompleted: false })
       dirtyInput.isDirty = true
     }
     // works as a model
@@ -57,6 +64,7 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
     editTask,
     updateTask,
     removeTask,
+    delegateTask,
     watchCreateTaskInput
   }
 

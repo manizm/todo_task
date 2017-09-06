@@ -1,10 +1,10 @@
 import navController from './nav.controller'
 class NavBar {
-  constructor($interval) {
+  constructor($rootScope) {
     this.restrict = 'E'
     this.template = require('./nav.directive.html')
-
-    this.controller = ['$scope', navController]
+    this.transclude = true
+    this.controller = ['$scope','$rootScope', navController]
 
     this.scope = {
       pageis: '=pagename'

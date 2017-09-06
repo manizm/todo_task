@@ -1,23 +1,36 @@
-export default function($scope, todosFactory) {
+export default function($scope, $rootScope, todosFactory) {
+  
   // destructuring the todosFactory
-  const { saveTask, editTask, updateTask, removeTask, watchCreateTaskInput } = todosFactory
+  const { saveTask, editTask, updateTask, removeTask, delegateTask, watchCreateTaskInput } = todosFactory
   
   let dirtyInput = { isDirty: false }
-
+  $scope.isDropdown = false
   $scope.editingTask = {}
+
+  $scope.username = 'abc',
+  $scope.users = ['abc', 'bcd', 'cde', 'def', 'efg']
   
   $scope.todos = [
     {
+      username: 'abc',
+      delegatedTo: '',
+      delegatedBy: 'abc',
       task: 'do dishes',
       isCompleted: true,
       initEdit: false
     },
     {
+      username: 'abc',
+      delegatedTo: 'dce',
+      delegatedBy: 'abc',
       task: 'complete the website',
       isCompleted: false,
       initEdit: false
     },
     {
+      username: 'dce',
+      delegatedTo: 'abc',
+      delegatedBy: 'dce',
       task: 'Do the express routing',
       isCompleted: false,
       initEdit: false
@@ -58,10 +71,39 @@ export default function($scope, todosFactory) {
   $scope.updateTask = updateTask
     .bind(this, $scope)
 
+  $scope.delegateTask = delegateTask
+    .bind(this, $scope)
+
+
   /* HELPER Methods */
   $scope.onCompletion = todo => todo.isCompleted = !todo.isCompleted
 
   $scope.closeModal = () => $scope.editingTask.initEdit = !$scope.editingTask.initEdit
+  
+  // toggle dropdown and set position of dropdown
+  $scope.showDropdown = ($event) => {
+    $scope.isDropdown = !$scope.isDropdown
+    if ($event !== undefined)
+      setDropdownBounds($event.currentTarget)
+  }
+
+  /*
+    This function is used because even though it is 2017
+    and we are thinking of going to mars,
+    and we have css4 on the way;
+    We are still stuck with issues in overflow property!
+    I mean fucking damn it CSS!!
+    Setting overflow-x: auto and/or overflow-y: visible/unset
+    is exactly like overflow: auto!!
+  */
+  function setDropdownBounds(el) {
+    let parentBounds = el.getBoundingClientRect() 
+    let dropdown = el.nextElementSibling
+    
+    dropdown.style.top = parentBounds.top + 35 + 'px'
+    dropdown.style.left = parentBounds.left + 'px'
+
+  }
 
 
   /*

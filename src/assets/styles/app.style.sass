@@ -19,8 +19,12 @@
 .no-collape
   min-width: 680px
 
-.is-overflow
-  overflow: auto !important
+.is-overflow-x
+  overflow-x: scroll
+  overflow-y: hidden
+
+.dropdown-menu
+  position: fixed
 
 .modal-active
   display: flex
@@ -47,8 +51,11 @@
 //   input
 //     margin-left: 1rem
 // TODO: CHANGE IT TO SINGLE VALUE LATER ON
-@for $i from 1 through 10
-  .is-wide-#{$i * 10}
-    width: 10% * $i
-    min-width: 300px
+@for $i from 1 through 20
+  .is-wide-#{$i * 5}
+    width: 5% * $i
+    @if ($i * 5) < 30
+      min-width: 150px
+    @else
+      min-width: 300px
 

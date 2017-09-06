@@ -1,6 +1,3 @@
-<div class="container">
-  <customnav pagename="login"></customnav>
-</div>
 
 <section class="hero is-primary is-bold">
   <div class="hero-body">
@@ -16,7 +13,7 @@
 </section>
 
 
-<form ng-submit="login()" class="section container" ng-show="showLogin && !showSignup && !showForgotPassword"> 
+<form ng-submit="login(user)" class="section container"> 
   <div class="field column is-6">
     <p class="control has-icons-left has-icons-right">
       <input 
@@ -51,6 +48,3 @@
     </p>
   </div>
 </form>
-
-<signupform ng-show="showSignup"></signupform>
-<forgotpassword ng-show="showForgotPassword"></forgotpassword>
