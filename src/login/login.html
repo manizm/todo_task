@@ -1,4 +1,4 @@
-<div class="container" ng-controller="navcontroller">
+<div class="container">
   <customnav pagename="login"></customnav>
 </div>
 
@@ -14,3 +14,43 @@
     </div>
   </div>
 </section>
+
+
+<form ng-submit="login()" class="section container" ng-show="showLogin && !showSignup && !showForgotPassword"> 
+  <div class="field column is-6">
+    <p class="control has-icons-left has-icons-right">
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="Username"
+        ng-model="user.username"
+        >
+      <span class="icon is-small is-left">
+        <i class="fa fa-user"></i>
+      </span>
+    </p>
+  </div>
+  <div class="field column is-6">
+    <p class="control has-icons-left has-icons-right">
+      <input 
+        class="input" 
+        type="password" 
+        placeholder="Password"
+        ng-model="user.password"
+        >
+      <span class="icon is-small is-left">
+        <i class="fa fa-lock"></i>
+      </span>
+    </p>
+  </div>
+  <div class="field column is-6">
+    <p class="control">
+      <button class="button is-success">
+        Login
+      </button>
+    </p>
+  </div>
+</form>
+
+<signupform ng-show="showSignup"></signupform>
+<forgotpassword ng-show="showForgotPassword"></forgotpassword>

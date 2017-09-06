@@ -59,8 +59,18 @@
         <td class="is-wide-70" ng-class="{isCompleted:todo.isCompleted}">{{todo.task}}</td>
         <td>
           <div class="field is-grouped actions">
-            <button class="button is-warning" ng-click="editTask(todo)">Edit Task</button>
-            <button class="button is-danger" ng-click="removeTask(todo)">Remove Task</button>
+            <button 
+              class="button is-warning" 
+              ng-click="editTask(todo)">
+                <span>Edit Task</span>
+                <span class="icon"><i class="fa fa-pencil"></i></span>
+            </button>
+            <button 
+              class="button is-danger" 
+              ng-click="removeTask(todo)">
+                <span>Remove Task</span>
+                <span class="icon"><i class="fa fa-remove"></i></span>
+              </button>
           </div>
         </td>
       </tr>

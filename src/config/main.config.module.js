@@ -2,6 +2,7 @@ import angular from 'angular'
 import uiRouter from 'angular-ui-router'
 import todosFactoryModule from '../todos/todos.factory.module'
 import todosController from '../todos/todos.controller'
+import loginController from '../login/login.controller'
 
 const app = angular.module('app', [uiRouter, todosFactoryModule.name])
 
@@ -16,11 +17,8 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', ($state
     })
     .state('login', {
       url: '/login',
-      template: require('../login/login.html')
-    })
-    .state('signup', {
-      url: '/signup',
-      template: require('../signup/signup.html')
+      template: require('../login/login.html'),
+      controller: loginController
     })
 
   $locationProvider.html5Mode(true)
