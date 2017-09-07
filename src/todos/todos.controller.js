@@ -97,11 +97,11 @@ export default function($scope, $rootScope, todosFactory) {
     is exactly like overflow: auto!!
   */
   function setDropdownBounds(el) {
-    let parentBounds = el.getBoundingClientRect() 
+    let dropdownBounds = el.getBoundingClientRect() 
     let dropdown = el.nextElementSibling
     
-    dropdown.style.top = parentBounds.top + 35 + 'px'
-    dropdown.style.left = parentBounds.left + 'px'
+    dropdown.style.top = dropdownBounds.top + 35 + 'px'
+    dropdown.style.left = dropdownBounds.left + 'px'
 
   }
 
