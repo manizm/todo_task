@@ -15,3 +15,16 @@ I will be making a todo.md file (checklist file - how ironical Mani!) where you 
 
 ### Suggestions
 If you have any suggestions, feel free to shout it out!
+
+### Installation
+##### Requirements: _Node v6.11.1+, npm version 3.10.10+_
+
+1. `npm install`
+
+2. **Optional** you might need to run production command at least once to create dist folder `npm run prod`
+
+3. **For static dev server** `npm run dev`
+
+4. **For dev server using express** `SET DEBUG=todo-task:* & npm start`
+
+_I would recommend using 3rd command instead of 2nd. Besides, both of them use hot module replacement_

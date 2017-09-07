@@ -1,0 +1,61 @@
+@import ~bulma/bulma
+
+.button
+  transition: .1s all ease-in-out
+  &.is-warning
+    &:hover
+      background-color: darken($warning, 20%)
+  &.is-danger
+    &:hover
+      background-color: darken($danger, 20%)
+
+.isCompleted
+  text-decoration: line-through
+
+.actions
+  .button
+    margin-right: 1rem
+
+.no-collape
+  min-width: 680px
+
+.is-overflow-x
+  overflow-x: auto
+  overflow-y: hidden
+
+.dropdown-menu
+  position: fixed
+
+.modal-active
+  display: flex
+
+.modal-content
+  input
+    margin-bottom: 1rem
+
+.super-big-font
+  font-size: 10rem
+  i
+    font-size: inherit
+
+.container-center
+  display: flex
+  align-items: center
+  justify-content: center
+
+.field
+  &.column
+    margin: 0 auto
+
+// .is-horizontal
+//   input
+//     margin-left: 1rem
+// TODO: CHANGE IT TO SINGLE VALUE LATER ON
+@for $i from 1 through 20
+  .is-wide-#{$i * 5}
+    width: 5% * $i
+    @if ($i * 5) < 30
+      min-width: 150px
+    @else
+      min-width: 300px
+

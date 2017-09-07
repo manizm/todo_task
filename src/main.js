@@ -1,7 +1,28 @@
-const css = require('./styles/app.style.scss')
-const logoimg = require('./images/logo.jpg')
+import angular from 'angular'
+import uiRouter from 'angular-ui-router'
+import appModule from './config/main.config.module'
 
-let imgTag = document.querySelector('img')
-imgTag.src = logoimg
+import navController from './nav.directive/nav.controller'
+import todosController from './todos/todos.controller'
+import authController from './auth/auth.controller'
 
-console.log("Hey webpack! and App.js something!")
+import NavDirective from './nav.directive/nav.directive'
+import UserDropdownList from './todos/users.dropdown.directive/users.dropdown.directive'
+
+// import bulma from 'bulma'
+import 'font-awesome-sass-loader'
+import './assets/styles/app.style.sass'
+
+
+appModule.run($rootScope => {
+  $rootScope.authenticated = false
+  $rootScope.current_user = ''
+})
+
+appModule.controller('todosController', todosController)
+appModule.controller('authController', authController)
+appModule.controller('navcontroller', navController)
+
+appModule.directive('customnav', () => new NavDirective)
+appModule.directive('userdropdown', () => new UserDropdownList)
+

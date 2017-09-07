@@ -1,0 +1,105 @@
+
+<section class="hero is-primary is-bold">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Todos Page
+      </h1>
+      <h2 class="subtitle">
+        Awesome!
+      </h2>
+    </div>
+  </div>
+</section>
+
+<form ng-submit="saveTask()" class="section container">
+  <div class="field is-grouped-desktop columns is-centered">
+    
+    <div class="control column is-three-quarters">
+      <input 
+        type="text" 
+        class="input" 
+        placeholder="What tasks do I have to do?"
+        ng-model="createTaskInput"
+      >
+    </div>
+
+    <div class="control column is-1">
+      <button class="button is-primary">Add Task</button>
+    </div>
+  </div>
+</form>
+
+<div class="has-text-centered super-big-font has-text-grey-lighter" ng-if="todos.length <= 0">
+  <i class="fa fa-question"></i><i class="fa fa-question"></i><i class="fa fa-question"></i>
+</div>
+
+<section class="section columns is-centered" ng-if="todos.length > 0">
+  <table class="table is-narrow column is-12-mobile is-12-tablet is-10-desktop is-overflow-x">  
+    <thead>
+      <tr>
+        <th>Completed?</th>
+        <th>Task</th>
+        <th>Delegated By</th>
+        <th>Delegated To</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  ng-repeat="todo in todos"> 
+        <td>
+          <input 
+            type="checkbox" 
+            class="checkbox" 
+            ng-click="onCompletion(todo)" 
+            ng-checked="todo.isCompleted"
+          >
+        </td>
+        <td class="is-wide-70" ng-class="{isCompleted:todo.isCompleted}">{{todo.task}}</td>
+        <td class="is-wide-15">{{todo.delegatedBy}}</td>
+        <td class="is-wide-15">{{todo.delegatedTo}}</td>
+        <td>
+          <div class="field is-grouped actions">
+            <userdropdown task='todo'></userdropdown>
+            <button 
+              class="button is-warning" 
+              ng-click="editTask(todo)">
+                <span>Edit</span>
+                <span class="icon"><i class="fa fa-pencil"></i></span>
+            </button>
+            <button 
+              class="button is-danger" 
+              ng-click="removeTask(todo)">
+                <span>Remove</span>
+                <span class="icon"><i class="fa fa-remove"></i></span>
+              </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<aside class="modal" ng-if="editingTask.initEdit" ng-class="{'modal-active':editingTask.initEdit}">
+  <div 
+    class="modal-background" 
+    ng-click="closeModal()">
+  </div> 
+
+  <form ng-submit="updateTask(taskedited)" class="modal-content"> 
+    <input 
+      type="text" 
+      class="input control" 
+      placeholder="What tasks do I have to do?"
+      ng-model="taskedited"
+      ng-value="editingTask.task"
+    >
+    <button class="button control is-primary">Edit Task</button>
+  </form>
+
+  <button 
+    class="modal-close is-large" 
+    aria-label="close" 
+    ng-click="closeModal()">
+  </button>
+</aside>
