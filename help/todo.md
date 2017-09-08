@@ -1,13 +1,14 @@
 #TODO
 - [x] ~~Setup webpack module~~
-- [ ] Setup basic file structure for angular and its controllers
-- [ ] Setup express
-- [ ] Setup routes
-- [ ] Setup passport.js
-- [ ] Setup Mongodb _(Local or mlab?)_
-- [ ] Create Mongoose Models/Schemas
-- [ ] Setup CRUD operations
-- [ ] Connect with front-end _(Angular Controllers)_
-- [ ] test
+- [x] ~Setup basic file structure for angular and its controllers~
+- [x] ~Setup express~
+- [x] ~Setup routes~
+- [x] ~Setup passport.js~
+- [x] ~Setup Mongodb _(Local or mlab?)_~
+- [x] ~Create Mongoose Models/Schemas~
+- [x] ~Setup CRUD operations~
+- [x] ~Connect with front-end _(Angular Controllers)_~
+- [x] ~test~
 - [ ] Integrate Socket.io **Q_Q**
+- [ ] Fix production version
 - [ ] Fingers Crossed!
