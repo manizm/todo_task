@@ -1,7 +1,9 @@
 const express = require('express'),
       router = express.Router(),
       mongoose = require('mongoose'),
-      Task = require('../backend/models/task.model')
+      Promise = require('bluebird')
+      Task = mongoose.model('Task')
+      User = mongoose.model('User')
 
 // this middleware is used for routes that must be authenticated
 function isAuthenticated(req, res, next) {
@@ -16,7 +18,7 @@ function isAuthenticated(req, res, next) {
 
   // otehrwise redirect to login page
   // !!!!!!!!!!!!CHECK REDIRECT ROUTE!!!!!!!!!!!!!!
-  return res.redirect('/login')
+  return res.redirect('/')
 }
 
 // register the authenticate middleware
@@ -41,22 +43,46 @@ router.route('/posts')
     })
   })
 
+  // .get((req, res) => {
+  //   console.log('debug1')
+  //   Task.find(function(err, tasks) {
+  //     console.log('debug2')
+  //     if (err) return res.send(500, err)
+      
+  //     return res.send(200, tasks)
+  //   })
+  // })
+
+// get all the tasks related to a particular user
+router.route('/posts/all/:id')
   .get((req, res) => {
-    Task.find()
-    .exec()
-    .then(tasks => res.send(tasks))
-    .catch(err => res.send(500, err))
+    console.log(req.params.id)
+    Promise.props(
+      {
+        task: Task.find({$or:[{username: req.params.id}, {delegatedTo: req.params.id}]}),
+        users:  User.find({}).select({"username": 1})
+      }
+    )  
+    .then(tasks => {
+      console.log('in posts route success', tasks)
+      res.status(200).send( tasks)
+    })
+    .catch(err => {
+      console.log('in posts route error')
+      res.status(500).send(err)
+    })
   })
 
-// api for specific post
+// api for specific task
 router.route('/posts/:id')
   
   // get post
   .get((req, res) => {
-    Task.findById(req.params.id)
-    .exec()
-    .then(task => res.json(task))
-    .catch(err => res.send(err))
+    Task.findById(req.params.id, function(err, task) {
+      if (err) res.send(err)
+      
+      res.json(task)
+    }) 
   })
 
   //update post
@@ -68,6 +94,7 @@ router.route('/posts/:id')
       task.delegatedTo = req.body.delegatedTo
       task.delegatedBy = req.body.delegatedBy 
       task.task = req.body.task
+      task.isCompleted = req.body.isCompleted
 
       task.save((err, task) => {
         if (err) res.send(err)
@@ -86,4 +113,19 @@ router.route('/posts/:id')
     .catch(err => res.send(err))
   })
 
+  // get all usernames
+  router.use('/list', isAuthenticated)
+  router.route('/list/users')
+    .get((req, res) => {
+      User.find({}).select({"username": 1})
+      .exec()
+      .then(users => {
+        console.log('in posts route success', users)
+        res.status(200).send(users)
+      })
+      .catch(err => {
+        console.log('in posts route success', err)
+        res.status(500).send(err)
+      })
+    })
 module.exports = router

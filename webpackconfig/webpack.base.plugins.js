@@ -49,10 +49,6 @@ const plugobj = {
       filename: 'style.css',
       disable: !varisProd,
       allChunks: true
-    }),
-    
-    new PurifyCSSPlugin({
-      paths: glob.sync(path.join(__dirname, '../src/*.html'))
     })
   ]
 }

@@ -1,30 +1,34 @@
 <nav class="level navbar">
-  <div class="level-left"><a ui-sref="todos" ng-click="authenticatetodo()" class="level-item">Home</a></div>
+  <div class="level-left">
+    <a ng-if="authenticate" 
+      ui-sref="todos" 
+      class="level-item">
+        Home
+    </a>
+    <h2 ng-if="!authenticate" class="has-text-centered">Awesome Task App</h2>
+  </div>
   <div class="level-right">
     
-    <a ng-hide="authenticated"
+    <a ng-hide="authenticate"
        ui-sref="forgotpassword"
-       ng-click="authenticateauth()"
        class="level-item">
          Forgot your password?
     </a>
     
-    <a ng-hide="authenticated"
+    <a ng-hide="authenticate"
        ui-sref="login"
-       ng-click="authenticateauth()"
        class="level-item button is-primary">
          Login
     </a>
 
-    <a ng-hide="authenticated"
-       ng-click="authenticateauth()"
+    <a ng-hide="authenticate"
        ui-sref="signup"
        class="level-item button is-success">
          Sign Up
     </a>
 
-    <a ng-show="authenticated"
-       ng-click="authenticateauth()"
+    <a ng-show="authenticate"
+       ng-click="logout()"
        ui-sref="login" 
        class="level-item is-success">
          Logout

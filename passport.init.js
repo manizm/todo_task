@@ -1,147 +1,131 @@
-const mongoose = require('mongoose')
-const User = require('./backend/models/models')
-const LocalStrategy = require('passport-local').Strategy
-const bCrypt = require('bcrypt-nodejs')
+var mongoose = require('mongoose')
+var User = mongoose.model('User')
+var LocalStrategy   = require('passport-local').Strategy
+var bCrypt = require('bcrypt-nodejs')
 
+module.exports = function(passport){
 
-module.exports = function (passport) {
+	// Passport needs to be able to serialize and deserialize users to support persistent login sessions
+	passport.serializeUser(function(user, done) {
+		console.log('serializing user:',user.username)
+		done(null, user._id)
+	})
+
+	passport.deserializeUser(function(id, done) {
+		User.findById(id, function(err, user) {
+			console.log('deserializing user:',user.username)
+			done(err, user)
+		})
+	})
+
+	passport.use('login', new LocalStrategy({
+			passReqToCallback : true
+		},
+		function(req, username, password, done) { 
+			// check in mongo if a user with username exists or not
+			User.findOne({ 'username' :  username }, 
+				function(err, user) {
+					// In case of any error, return using the done method
+					if (err)
+						return done(err)
+					// Username does not exist, log the error and redirect back
+					if (!user){
+						console.log('User Not Found with username '+username);
+						return done(null, false);                
+					}
+					// User exists but wrong password, log the error 
+					if (!isValidPassword(user, password)){
+						console.log('Invalid Password')
+						return done(null, false) // redirect back to login page
+					}
+					// User and password both match, return user from done method
+					// which will be treated like success
+					return done(null, user)
+				}
+			)
+		}
+	))
+
+	passport.use('signup', new LocalStrategy({
+			passReqToCallback : true // allows us to pass back the entire request to the callback
+		},
+		function(req, username, password, done) {
+
+			// find a user in mongo with provided username
+			User.findOne({ 'username' :  username }, function(err, user) {
+				// In case of any error, return using the done method
+				if (err){
+					console.log('Error in SignUp: '+err)
+					return done(err)
+				}
+				// already exists
+				if (user) {
+					console.log('User already exists with username: '+username)
+					return done(null, false)
+				} else {
+					// if there is no user, create the user
+					var newUser = new User()
+
+					// set the user's local credentials
+					newUser.username = username
+					newUser.password = createHash(password)
+
+					// save the user
+					newUser.save(function(err) {
+						if (err){
+							console.log('Error in Saving user: '+err) 
+							res.send(err)
+						}
+						console.log(newUser.username + ' Registration succesful') 
+						return done(null, newUser)
+					})
+				}
+			})
+		})
+  )
   
 
-  /* serialize and desiralize users for persistant login sessions */
-  passport.serializeUser((user, done) => {
-    console.log(`serializing user: ${user.username}`)
-    // return the unique id for the user
-    done(null, user._id)
-  })
 
-  
-  /* desirialize user will use unique id from serializeUser */
-  passport.deserializeUser((username, done) => {
-    User.findById(id)
-    .exec()
-    .then(user => {
-      console.log('Deserializing user: ', user.username)
-      done(null, user)
-    })
-    .catch(err => done(err))
-  })
+  passport.use('reset', new LocalStrategy({
+      passReqToCallback : true // allows us to pass back the entire request to the callback
+    },
+    function(req, username, password, done) {
 
-
-  /* setup login local strategy */
-  passport.use('login', new LocalStrategy(
-
-    // callback
-    (req, username, password, done) => {
-
-      User.findOne({'username' : username})
-        .exec()
-        .then(user => {
-          // if username does not exist
-          if (!user) {
-            console.log(`user not found with username ${username}`)
-            done(`user not found with username ${username}`, false)
-          }
-
-          // if wrong password
-          if(!isValidPassword(user, password)) {
-            console.log('Invalid Password!')
-            done('Invalid Password', false)
-          }
-          
-          // othweise username and password is correct! /* ADD RETURN IF IT DOESNT WORK */
-          done(null, user)
-        })
-        .catch(err => done(err))
-    }
-  ))
-
-  
-  /* setup signup local strategry */
-  passport.use('signup', new LocalStrategy(
-
-    (req, username, password, done) => {
-        
-      User.findOne({'username': username})
-      .then(user => {
-        // if user already exists
-        if(user) {
-          console.log(`User already exists with username: ${username}`)
-          done(null, false)
+      // find a user in mongo with provided username
+      User.findOne({ 'username' :  username }, function(err, user) {
+        // In case of any error, return using the done method
+        if (err){
+          console.log('Error in Reset: '+err)
+          return done(err)
         }
-        else {
-          createUser(username, password, done)
+        if (!user){
+          console.log('User Not Found with username '+username);
+          return done(null, false);                
+        }
+        // already exists
+        if (user) {
+          user.password = createHash(password)
+
+          // save the password
+          user.save(function(err) {
+            if (err){
+              console.log('Error in Saving password: '+err) 
+              res.send(err)
+            }
+            console.log('password change succesful') 
+            return done(null, user)
+          })
         }
       })
-    }
-  ))
-
-
-  /* setup forgot Password local strategry */
-  passport.use('forgotPassword', new LocalStrategy(
-
-    (req, username, password, done) => {
-        
-      console.log('request in signup is: ', req)
-
-      User.findOne({'username': username})
-      .exec()
-      .then(user => {
-        // if username does not exist
-        if (!user) {
-          console.log(`user not found with username ${username}`)
-          done(`user not found with username ${username}`, false)
-        }
-        else {
-          createPassword(user, password, done)
-        }
-      })
-
-    }
-  ))
-
-  /* utility functions */
-  
-  const createUser = (username, password) => {
-    // if there is no user, create a new one
-    const newUser = new User()
-
-    // set the user's local credentials
-    newUser.username = username
-    newUser.password = createHash(password)
-
-    // save the user
-    newUser.save(err => {
-      if(err) {
-        console.log(`Error in saving user: ${err}`)
-        // throw err
-      }
-      console.log(`${newUser.username} Registration successful!`)
-      done(null, newUser)
     })
-  }
+  )
+	
+	var isValidPassword = function(user, password){
+		return bCrypt.compareSync(password, user.password)
+	}
+	// Generates hash using bCrypt
+	var createHash = function(password){
+		return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null)
+	}
 
-
-  const createPassword = (user, password, done) => {
-    user.password = createHash(password)
-    User.save(err => {
-      if (err) {
-        console.log(`Error in resetting the password: ${err}`)
-        // throw err
-      }
-
-      console.log(`Password reset successful!`)
-      return done(null, User)
-    })
-    // othweise username and password is correct!
-    return done(null, user)
-  }
-
-
-  const isValidPassword = (user, password) => {
-    bCrypt.compareSync(password, user.password)
-  }
-
-  const createHash = (password) => {
-    return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null)
-  }
 }

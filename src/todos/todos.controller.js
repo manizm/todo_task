@@ -1,41 +1,22 @@
 export default function($scope, $rootScope, todosFactory) {
   
   // destructuring the todosFactory
-  const { saveTask, editTask, updateTask, removeTask, delegateTask, watchCreateTaskInput } = todosFactory
+  const { putTask, saveTask, editTask, updateTask, removeTask, delegateTask, watchCreateTaskInput } = todosFactory
   
   let dirtyInput = { isDirty: false }
   $scope.isDropdown = false
   $scope.editingTask = {}
-
-  $scope.username = 'abc',
-  $scope.users = ['abc', 'bcd', 'cde', 'def', 'efg']
-  
-  $scope.todos = [
-    {
-      username: 'abc',
-      delegatedTo: '',
-      delegatedBy: 'abc',
-      task: 'do dishes',
-      isCompleted: true,
-      initEdit: false
-    },
-    {
-      username: 'abc',
-      delegatedTo: 'dce',
-      delegatedBy: 'abc',
-      task: 'complete the website',
-      isCompleted: false,
-      initEdit: false
-    },
-    {
-      username: 'dce',
-      delegatedTo: 'abc',
-      delegatedBy: 'dce',
-      task: 'Do the express routing',
-      isCompleted: false,
-      initEdit: false
-    }
-  ]
+  $scope.todos = []
+  $scope.users = []
+  $scope.currentUser = $rootScope.current_user
+  todosFactory.getAllTasks()
+  .then((response) => {
+    console.log(response)
+    $scope.todos = response.data.task
+    $scope.users = response.data.users
+  }).catch(err => {
+    console.log("something is wrong in retreiving tasks")
+  })
 
   /* 
     ran after createTaskInput model is watched
@@ -76,7 +57,10 @@ export default function($scope, $rootScope, todosFactory) {
 
 
   /* HELPER Methods */
-  $scope.onCompletion = todo => todo.isCompleted = !todo.isCompleted
+  $scope.onCompletion = todo => {
+    todo.isCompleted = !todo.isCompleted
+    $scope.updateTask(todo)
+  }
 
   $scope.closeModal = () => $scope.editingTask.initEdit = !$scope.editingTask.initEdit
   

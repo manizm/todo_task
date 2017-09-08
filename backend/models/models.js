@@ -2,30 +2,31 @@ var mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const UserSchema = new Schema(
+const UserSchema = new mongoose.Schema(
   {
     username: { type: String, required: true },
     password: { type: String, required: true }
-    // resetPasswordToken: String,
-    // resetPasswordExpires: Date
   }
 )
 
 
+const TaskSchema = new mongoose.Schema(
+  {
+    username: {type: String, required: true},
+    delegatedTo: {type: String},
+    delegatedBy: {type: String},
+    task: {type: String, required: true},
+    isCompleted: {type: Boolean, default: false},
+    initEdit: {type: Boolean, default: false}
+  }
+)
 
-// UserSchema.pre('save', function(next) {
-//   let user = this
-//       SALT_FACTOR = 10
 
-//   if (!user.isModified('password')) return next()
+TaskSchema.methods.getUsers = function () {
+  const query = this.model.find({}).select({username: 1})
+  return query
+}
 
-//   bCrypt.hash(user.password, salt, null)
-//     .then(hash => { 
-//       user.password = hash 
-//       next()
-//     })
-//     .catch(err => next(err))
-// })
-
+module.exports = mongoose.model('Task', TaskSchema)
 
 module.exports = mongoose.model('User', UserSchema)

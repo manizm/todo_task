@@ -4,7 +4,8 @@ class NavBar {
     this.restrict = 'E'
     this.template = require('./nav.directive.html')
     this.transclude = true
-    this.controller = ['$scope','$rootScope', navController]
+    this.replace = true
+    this.controller = ['$scope','$rootScope', '$http', '$location', navController]
 
     this.scope = {
       pageis: '=pagename'
