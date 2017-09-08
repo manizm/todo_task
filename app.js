@@ -7,9 +7,24 @@ const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session)
 const passport = require('passport')
 
 require('./backend/models/models')
+
+// session middleware to not store sessions in memory
+// otherwise leaks memory
+const store = new MongoDBStore({
+  uri: 'mongodb://manizmtask:todotask@ds127864.mlab.com:27864/task_todo',
+  collection: 'expressSessions'
+})
+
+// Catch errors
+store.on('error', function(err) {
+  assert.ifError(err)
+  assert.ok(false)
+})
+
 
 // const index = require('./routes/index')
 const api = require('./routes/api')
@@ -37,7 +52,11 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'))
 app.use(session({
-  secret: 'copy cat'
+  secret: 'copy cat',
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+  },
+  store: store, resave: true, saveUninitialized: true
 }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
