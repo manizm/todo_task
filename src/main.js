@@ -14,14 +14,14 @@ import 'font-awesome-sass-loader'
 import './assets/styles/app.style.sass'
 
 
-appModule.run(($rootScope, $http) => {
+appModule.run(['$rootScope', '$http', ($rootScope, $http) => {
   $rootScope.authenticated = false
   $rootScope.current_user = ''
-})
+}])
 
-appModule.controller('todosController', todosController)
-appModule.controller('authController', authController)
-appModule.controller('navcontroller', navController)
+appModule.controller('todosController', ['$scope', '$rootScope', 'todosFactory', todosController])
+appModule.controller('authController', ['$scope', '$rootScope', '$http', '$location', authController])
+appModule.controller('navcontroller', ['$scope', '$rootScope', '$http', '$location', navController])
 
 appModule.directive('customnav', () => new NavDirective)
 appModule.directive('userdropdown', () => new UserDropdownList)

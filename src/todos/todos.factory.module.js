@@ -2,7 +2,7 @@ import angular from 'angular'
 
 const todoFactoryModule = angular.module('app.todosFactoryModule', [])
 
-.factory('todosFactory', ($rootScope, $http) => {
+.factory('todosFactory', ['$rootScope', '$http', ($rootScope, $http) => {
 
   // get all the tasks from server
   function getAllTasks() {
@@ -130,6 +130,6 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
     watchCreateTaskInput
   }
 
-})
+}])
 
 export default todoFactoryModule

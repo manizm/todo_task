@@ -13,22 +13,22 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', ($state
     .state('login', {
       url: '/',
       template: require('../authenticate/login.html'),
-      controller: authController
+      controller: ['$scope', '$rootScope', '$http', '$location', authController]
     })
     .state('todos', {
       url: '/todos',
       template: require('../todos/todos.html'),
-      controller: todosController
+      controller: ['$scope', '$rootScope', 'todosFactory', todosController]
     })
     .state('signup', {
       url: '/auth/signup',
       template: require('../authenticate/signup.html'),
-      controller: authController
+      controller: ['$scope', '$rootScope', '$http', '$location', authController]
     })
     .state('forgotpassword', {
       url: '/auth/forgotpassword',
       template: require('../authenticate/forgotpassword.html'),
-      controller: authController
+      controller: ['$scope', '$rootScope', '$http', '$location', authController]
     })
     // .state('logout', {
     //   url: '/',

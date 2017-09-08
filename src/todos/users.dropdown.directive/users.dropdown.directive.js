@@ -4,7 +4,7 @@ class UserDropdownList {
     this.restrict = 'E'
     this.template = require('./users.dropdown.directive.html')
     this.transclude = true
-    this.controller = todosController
+    this.controller = ['$scope', '$rootScope', 'todosFactory', todosController]
 
     this.scope = { task: '=' }
   }

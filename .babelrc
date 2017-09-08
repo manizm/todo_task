@@ -3,7 +3,8 @@
     ["env", 
       {
         "modules": false,
-        "targets": {"browsers": ["last 2 versions", "safari >= 7"]}
+        "targets": {"browsers": ["last 2 versions", "safari >= 7"]},
+        "plugins": [["angularjs-annotate", {"explicitOnly": true}]]
       }
     ]
   ]
