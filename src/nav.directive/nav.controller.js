@@ -1,18 +1,4 @@
 module.exports = ($scope, $rootScope, $http, $location) => {
-  /* TEMPORARY! REMOVE THEM AFTER SETTING UP BACKEND */
-  // $scope.authenticated = $rootScope.authenticated
-  // $scope.authenticated
-
-  // $scope.authenticatetodo = () => {
-  //   console.log($scope, $rootScope)
-  //   $scope.authenticated = $rootScope.authenticated
-    
-  // }
-  // $scope.authenticateauth = () => {
-  //   console.log($scope, $rootScope)
-  //   $scope.authenticated = $rootScope.authenticated
-    
-  // }
   $scope.logout = function() {
     $http.get('/auth/signout')
     .then(response => {

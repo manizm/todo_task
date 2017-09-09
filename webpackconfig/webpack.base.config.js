@@ -3,7 +3,6 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const glob = require('glob')
-const PurifyCSSPlugin = require('purifycss-webpack')
 const raw = require('raw-loader')
 const prodPlugins = require('./webpack.base.plugins')
 
@@ -31,6 +30,7 @@ const webpackConfig = {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: 'babel-loader',
         include: CLIENT_DIR
       },
@@ -40,6 +40,7 @@ const webpackConfig = {
       },
       {
         test: /\.(scss|sass)$/,
+        exclude: /node_modules/,
         use: prodPlugins.cssConfig
       },
       {

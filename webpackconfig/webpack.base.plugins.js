@@ -4,8 +4,8 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const glob = require('glob')
-const PurifyCSSPlugin = require('purifycss-webpack')
 const raw = require('raw-loader')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 /* Set true if NODE_ENV argument passed to npm script is "production" */
 const varisProd = process.env.NODE_ENV === 'production'
@@ -49,6 +49,12 @@ const plugobj = {
       filename: 'style.css',
       disable: !varisProd,
       allChunks: true
+    }),
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /\.optimize\.css$/g,
+      cssProcessor: require('cssnano'),
+      cssProcessorOptions: {discardComments: {removeAll: true}},
+      canPrint: true
     })
   ]
 }

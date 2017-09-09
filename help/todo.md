@@ -10,5 +10,6 @@
 - [x] ~Connect with front-end _(Angular Controllers)_~
 - [x] ~test~
 - [ ] Integrate Socket.io **Q_Q**
-- [ ] Fix production version
+- [ ] Add UglifyJS and fix HMR in express dev
+- [x] ~Fix production version~
 - [ ] Fingers Crossed!
