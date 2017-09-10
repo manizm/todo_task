@@ -1,11 +1,21 @@
 import angular from 'angular'
+import io from 'socket.io-client'
 
 const todoFactoryModule = angular.module('app.todosFactoryModule', [])
 
-.factory('todosFactory', ['$http', '$window', ( $http, $window) => {
+.factory('todosFactory', ['$http', '$window', ($http, $window) => {
   // console.log($window.sessionStorage.currentUser)
   // get all the tasks from server
-  console.log($window)
+
+  var sockets = io.connect('http://localhost:3000')
+  sockets.on('connect', () => {
+    console.log('hey! it connected!')
+  })
+
+  // socket.on('connect', () => {
+  //   console.log('connected to sockets!')
+  // })
+
   function getAllTasks() {
     return $http.get(`/api/posts/all/${$window.sessionStorage.current_user}`)
   }
