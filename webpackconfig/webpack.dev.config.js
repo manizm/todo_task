@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const varisProd = process.env.NODE_ENV === 'production'
 
-baseConfig.entry = ['webpack-hot-middleware/client', './main.js']
+baseConfig.entry = ['./main.js']
 console.log(baseConfig.module)
 baseConfig.devServer = {
   contentBase: process.cwd(),

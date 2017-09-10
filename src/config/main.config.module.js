@@ -7,8 +7,14 @@ import authController from '../authenticate/auth.controller'
 
 const app = angular.module('app', [uiRouter, todosFactoryModule.name])
 
-app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', ($stateProvider, $urlRouterProvider, $locationProvider) => {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$provide', ($stateProvider, $urlRouterProvider, $locationProvider, $provide) => {
   $urlRouterProvider.otherwise('/')
+  
+  // to take care of hashbangs and server routing
+  $provide.decorator('$sniffer', function($delegate) {
+    $delegate.history = false
+    return $delegate
+  })
 
   $stateProvider
     .state('login', {
@@ -36,7 +42,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', ($state
     //   controller: todosController
     // })
 
-  $locationProvider.hashPrefix('')
+  $locationProvider.html5Mode(true).hashPrefix('')
   
 }])
 

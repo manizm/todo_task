@@ -20,9 +20,7 @@ appModule.run(['$rootScope', '$http', '$window', ($rootScope, $http, $window) =>
   // $window.sessionStorage.current_user = ''
   
 }])
-appModule.controller('mainController', ['$stateParams', ($stateParams) => { 
-  if (!$stateParams.id) $stateParams.id = ''
-}])
+
 appModule.controller('todosController', ['$scope', 'todosFactory', '$window', todosController])
 appModule.controller('authController', ['$scope', '$http', '$location', '$window', '$rootScope', authController])
 appModule.controller('navcontroller', ['$scope', '$http', '$location', '$window', '$rootScope', navController])

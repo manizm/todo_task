@@ -2,7 +2,6 @@ export default function($scope, todosFactory, $window) {
   
   // destructuring the todosFactory
   const { putTask, saveTask, editTask, updateTask, removeTask, delegateTask, watchCreateTaskInput } = todosFactory
-  $scope.data = {}
   let dirtyInput = { isDirty: false }
   $scope.isDropdown = false
   $scope.editingTask = {}

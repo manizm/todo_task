@@ -2,12 +2,11 @@ import angular from 'angular'
 
 const todoFactoryModule = angular.module('app.todosFactoryModule', [])
 
-.factory('todosFactory', ['$http', '$stateParams', '$window', ( $http, $stateParams, $window) => {
+.factory('todosFactory', ['$http', '$window', ( $http, $window) => {
   // console.log($window.sessionStorage.currentUser)
   // get all the tasks from server
   console.log($window)
   function getAllTasks() {
-    // console.log($stateParams.id, $stateParams)
     return $http.get(`/api/posts/all/${$window.sessionStorage.current_user}`)
   }
 

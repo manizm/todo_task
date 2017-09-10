@@ -36,8 +36,8 @@ mongoose.connect('mongodb://manizmtask:todotask@ds127864.mlab.com:27864/task_tod
 const app = express();
 
 
-const DIST_DIR = path.join(__dirname, 'dist'),
-      HTML_FILE = path.join(DIST_DIR, 'index.html'),
+const DIST_DIR = path.resolve(__dirname, 'dist'),
+      HTML_FILE = path.resolve(DIST_DIR, 'index.html'),
       isDevelopment = process.env.NODE_ENV !== 'production'
 
 // view engine setup
@@ -82,7 +82,11 @@ if (isDevelopment) {
     }
   }))
   
-  app.use(webpackHotMiddleware(compiler))
+  app.use(webpackHotMiddleware(compiler, {
+    log: console.log,
+    path: '/#/__webpack_hmr',
+    heartbeat: 10 * 1000
+  }))
   app.use('/', express.static(DIST_DIR, {redirect: false}))
   app.use(passport.initialize())
   app.use(passport.session())

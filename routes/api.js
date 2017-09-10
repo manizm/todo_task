@@ -47,7 +47,7 @@ router.route('/posts')
 // get all the tasks related to a particular user
 router.route('/posts/all/:id')
   .get((req, res) => {
-    console.log(req)
+    // console.log(req)
     console.log(req.params.id)
     Promise.props(
       {
@@ -56,11 +56,11 @@ router.route('/posts/all/:id')
       }
     )  
     .then(tasks => {
-      console.log('in posts route success', tasks)
+      console.log('in posts route for posts/all/:id success', tasks)
       res.status(200).send( tasks)
     })
     .catch(err => {
-      console.log('in posts route error')
+      console.log('in posts route for posts/all/:id failure')
       res.status(500).send(err)
     })
   })
@@ -111,11 +111,11 @@ router.route('/posts/:id')
       User.find({}).select({"username": 1})
       .exec()
       .then(users => {
-        console.log('in posts route success', users)
+        console.log('in posts routes for /list success', users)
         res.status(200).send(users)
       })
       .catch(err => {
-        console.log('in posts route success', err)
+        console.log('in posts route for /list failure', err)
         res.status(500).send(err)
       })
     })
