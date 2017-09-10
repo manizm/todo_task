@@ -1,17 +1,17 @@
-export default function($scope, $rootScope, todosFactory) {
+export default function($scope, todosFactory, $window) {
   
   // destructuring the todosFactory
   const { putTask, saveTask, editTask, updateTask, removeTask, delegateTask, watchCreateTaskInput } = todosFactory
-  
+  $scope.data = {}
   let dirtyInput = { isDirty: false }
   $scope.isDropdown = false
   $scope.editingTask = {}
   $scope.todos = []
   $scope.users = []
-  $scope.currentUser = $rootScope.current_user
+  $scope.currentUser = angular.copy($window.sessionStorage.current_user)
   todosFactory.getAllTasks()
   .then((response) => {
-    console.log(response)
+    // console.log(response)
     $scope.todos = response.data.task
     $scope.users = response.data.users
   }).catch(err => {

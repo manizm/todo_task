@@ -1,10 +1,10 @@
 import todosController from '../todos.controller'
 class UserDropdownList {
-  constructor($rootScope) {
+  constructor($window) {
     this.restrict = 'E'
     this.template = require('./users.dropdown.directive.html')
     this.transclude = true
-    this.controller = ['$scope', '$rootScope', 'todosFactory', todosController]
+    this.controller = ['$scope', 'todosFactory', '$window', todosController]
 
     this.scope = { task: '=' }
   }

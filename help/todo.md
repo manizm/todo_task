@@ -11,5 +11,6 @@
 - [x] ~test~
 - [ ] Integrate Socket.io **Q_Q**
 - [ ] Add UglifyJS and fix HMR in express dev
+- [ ] Using global window object to store state.. | FIX in future - use local storage or sessions
 - [x] ~Fix production version~
 - [ ] Fingers Crossed!

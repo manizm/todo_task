@@ -29,6 +29,7 @@ store.on('error', function(err) {
 // const index = require('./routes/index')
 const api = require('./routes/api')
 const authenticate = require('./routes/authenticate')(passport)
+// const generalRoutes = require('./routes/general.routes')(passport)
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://manizmtask:todotask@ds127864.mlab.com:27864/task_todo')
 
@@ -82,10 +83,10 @@ if (isDevelopment) {
   }))
   
   app.use(webpackHotMiddleware(compiler))
-  app.use(express.static(DIST_DIR))
+  app.use('/', express.static(DIST_DIR, {redirect: false}))
   app.use(passport.initialize())
   app.use(passport.session())
-  app.get('/', (req, res, next) => {
+  app.get('.*', (req, res, next) => {
     compiler.outputFileSystem.readFile(HTML_FILE, (err, result) => {
       if (err) {
         return next(err)
@@ -99,10 +100,10 @@ if (isDevelopment) {
 }
 
 else {
-  app.use(express.static(DIST_DIR))
+  app.use('/', express.static(DIST_DIR, {redirect: false}))
   app.use(passport.initialize())
   app.use(passport.session())
-  app.get('/', (req, res) => res.sendFile(HTML_FILE))
+  app.get('.*', (req, res) => res.sendFile(HTML_FILE))
 }
 
 /* BOTTOM OF THE MIDDLEWARE CHAIN */
@@ -112,6 +113,8 @@ else {
 
 app.use('/auth', authenticate)
 app.use('/api', api)
+
+// app.use('/', generalRoutes)
 // app.use('/', (req, res) => res.send({message: 'hello'}))
 
 
@@ -136,7 +139,7 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  // console.log(req)
   // render the error page
   res.status(err.status || 500);
   res.send(err);

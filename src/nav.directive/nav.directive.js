@@ -1,11 +1,11 @@
 import navController from './nav.controller'
 class NavBar {
-  constructor($rootScope) {
+  constructor($window, $rootScope) {
     this.restrict = 'E'
     this.template = require('./nav.directive.html')
     this.transclude = true
     this.replace = true
-    this.controller = ['$scope','$rootScope', '$http', '$location', navController]
+    this.controller = ['$scope', '$http', '$location', '$window', '$rootScope', navController]
 
     this.scope = {
       pageis: '=pagename'

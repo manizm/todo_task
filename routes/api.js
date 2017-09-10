@@ -13,8 +13,10 @@ function isAuthenticated(req, res, next) {
   //     return next()
 
   // if user is authenticated, call next
-  if (req.isAuthenticated())
+  if (req.isAuthenticated()){
+    console.log('isAuthenticated')
     return next()
+  }
 
   // otehrwise redirect to login page
   // !!!!!!!!!!!!CHECK REDIRECT ROUTE!!!!!!!!!!!!!!
@@ -36,26 +38,16 @@ router.route('/posts')
     task.delegatedBy = req.body.delegatedBy 
     task.task = req.body.task
     
-    task.save((err, task) => {
-      if (err) return res.send(500, err)
-
-      return res.json(task)
-    })
+    task.save()
+    .exec()
+    .then(task => res.json(task))
+    .catch(res.send(500, err))
   })
-
-  // .get((req, res) => {
-  //   console.log('debug1')
-  //   Task.find(function(err, tasks) {
-  //     console.log('debug2')
-  //     if (err) return res.send(500, err)
-      
-  //     return res.send(200, tasks)
-  //   })
-  // })
 
 // get all the tasks related to a particular user
 router.route('/posts/all/:id')
   .get((req, res) => {
+    console.log(req)
     console.log(req.params.id)
     Promise.props(
       {
@@ -78,11 +70,10 @@ router.route('/posts/:id')
   
   // get post
   .get((req, res) => {
-    Task.findById(req.params.id, function(err, task) {
-      if (err) res.send(err)
-      
-      res.json(task)
-    }) 
+    Task.findById(req.params.id)
+    .exec()
+    .then(task => res.json(task))
+    .catch(res.send(err))
   })
 
   //update post
@@ -97,7 +88,7 @@ router.route('/posts/:id')
       task.isCompleted = req.body.isCompleted
 
       task.save((err, task) => {
-        if (err) res.send(err)
+        if (err) {res.send(err)}
         
           res.json(task)
       })

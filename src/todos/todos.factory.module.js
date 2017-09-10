@@ -2,11 +2,13 @@ import angular from 'angular'
 
 const todoFactoryModule = angular.module('app.todosFactoryModule', [])
 
-.factory('todosFactory', ['$rootScope', '$http', ($rootScope, $http) => {
-
+.factory('todosFactory', ['$http', '$stateParams', '$window', ( $http, $stateParams, $window) => {
+  // console.log($window.sessionStorage.currentUser)
   // get all the tasks from server
+  console.log($window)
   function getAllTasks() {
-    return $http.get(`/api/posts/all/${$rootScope.current_user}`)
+    // console.log($stateParams.id, $stateParams)
+    return $http.get(`/api/posts/all/${$window.sessionStorage.current_user}`)
   }
 
   // update task to the db
@@ -102,9 +104,9 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
     // pushes the task in todo list
     else if (val && !dirtyInput.isDirty) {
       const todo = {
-        username: $rootScope.current_user,
+        username: angular.copy($window.sessionStorage.current_user),
         task: val,
-        delegatedBy: $rootScope.current_user,
+        delegatedBy: angular.copy($window.sessionStorage.current_user),
         isCompleted: false
       }
       $scope.todos.push(todo)
