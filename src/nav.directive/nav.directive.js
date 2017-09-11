@@ -1,4 +1,6 @@
 import navController from './nav.controller'
+
+// Navbar directive constructor class
 class NavBar {
   constructor($window, $rootScope) {
     this.restrict = 'E'
@@ -7,6 +9,10 @@ class NavBar {
     this.replace = true
     this.controller = ['$scope', '$http', '$location', '$window', '$rootScope', navController]
 
+    /* 
+      we set the scope for debugging purpose
+      not used anywhere for production
+    */
     this.scope = {
       pageis: '=pagename'
     }

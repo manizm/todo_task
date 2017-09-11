@@ -18,6 +18,7 @@ module.exports = function(passport){
 		})
 	})
 
+	/* LOGIN STRATEGY */
 	passport.use('login', new LocalStrategy({
 			passReqToCallback : true
 		},
@@ -46,6 +47,7 @@ module.exports = function(passport){
 		}
 	))
 
+	/* SIGNUP STRATEGY */
 	passport.use('signup', new LocalStrategy({
 			passReqToCallback : true // allows us to pass back the entire request to the callback
 		},
@@ -83,9 +85,8 @@ module.exports = function(passport){
 			})
 		})
   )
-  
 
-
+	/* RESET PASSWORD STRATEGY */
   passport.use('reset', new LocalStrategy({
       passReqToCallback : true // allows us to pass back the entire request to the callback
     },
@@ -120,6 +121,8 @@ module.exports = function(passport){
     })
   )
 	
+	/* HELPER FUNCTIONS */
+	// checks if password is valid
 	var isValidPassword = function(user, password){
 		return bCrypt.compareSync(password, user.password)
 	}

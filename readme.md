@@ -13,6 +13,9 @@ This app will use:
 ### Todo.md
 I will be making a todo.md file (checklist file - how ironical Mani!) where you can check the development process and what I have completed so far. **Please check help folder**
 
+### File Structure
+Please refer to `file.structure.md` file on the root folder
+
 ### Suggestions
 If you have any suggestions, feel free to shout it out!
 

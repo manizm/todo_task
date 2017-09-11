@@ -1,23 +1,58 @@
 import io from 'socket.io-client'
+/*
+  Main todos controller
+  uses todosFactory for most of the implementation logic
+  Some logics are defined here which are just mostly helper functions
+*/
+
 export default function($scope, todosFactory, $window) {
   
   // destructuring the todosFactory
   const { sockets, putTask, saveTask, editTask, updateTask, removeTask, delegateTask, watchCreateTaskInput } = todosFactory
   
+  // a flag to check if add-task input has any text inside
   let dirtyInput = { isDirty: false }
   
+  // flag to show dropdown for users
   $scope.isDropdown = false
+
+  // temporary object that helps in creating a new task
   $scope.editingTask = {}
   
+  /*
+    these are the main models
+    todos holds all the tasks
+    users holds all the usernames to be used to task delegation
+  */
   $scope.todos = []
   $scope.users = []
   
+
+  /* 
+    Set the current user as the user that we set in window object during login process
+    This will be used in various locations
+  */
   $scope.currentUser = angular.copy($window.sessionStorage.current_user)
   
+
+  /*
+    Looks for the delegatedTo event fired from the server
+    When the event occurs, we receive a task
+    we check if the task is related to the current user
+    then we push it to the main todos model
+  */
   sockets.on('delegatedTo', task => {
-    $scope.todos.push(task)
+    if ($scope.currentUser === task.delegateTo) {
+      $scope.todos.push(task)
+    }
   })
 
+
+  /*
+    This gets all the tasks from server as soon as todos page loads
+    upon successful response, we push all the tasks to main todos model
+    and users to users model
+  */
   todosFactory.getAllTasks()
   .then((response) => {
     // console.log(response)
@@ -61,19 +96,34 @@ export default function($scope, todosFactory, $window) {
   $scope.updateTask = updateTask
     .bind(this, $scope)
 
+
+  /*
+    This helps in delegating a task to the user
+    a user is selected through dropdown menu in the list
+    and is passed the selected task and user
+    this selected task and user is then used to
+    1) Update the task in database
+    2) Emit a socket event that can be seen by other users
+  */
   $scope.delegateTask = delegateTask
     .bind(this, $scope)
 
 
   /* HELPER Methods */
+
+  /*
+    changes the completed flag of a particular task
+    updates the task into database
+  */
   $scope.onCompletion = todo => {
     todo.isCompleted = !todo.isCompleted
     $scope.updateTask(todo)
   }
 
+  // helps in closing the edit task modal
   $scope.closeModal = () => $scope.editingTask.initEdit = !$scope.editingTask.initEdit
   
-  // toggle dropdown and set position of dropdown
+  // toggles the dropdown and sets position of dropdown
   $scope.showDropdown = ($event) => {
     $scope.isDropdown = !$scope.isDropdown
     if ($event !== undefined)
@@ -88,6 +138,8 @@ export default function($scope, todosFactory, $window) {
     I mean fucking damn it CSS!!
     Setting overflow-x: auto and/or overflow-y: visible/unset
     is exactly like overflow: auto!!
+
+    In short - it moves the user dropdown list in correct position
   */
   function setDropdownBounds(el) {
     let dropdownBounds = el.getBoundingClientRect() 

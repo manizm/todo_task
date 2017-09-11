@@ -1,3 +1,5 @@
+/* KEPT FOR SAFE KEEPING - MERGED IT IN MODELS DUE TO SMALL SIZE.. */
+
 var mongoose = require('mongoose')
 
 const Schema = mongoose.Schema

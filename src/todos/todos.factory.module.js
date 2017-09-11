@@ -1,13 +1,20 @@
 import angular from 'angular'
 import io from 'socket.io-client'
 
-const todoFactoryModule = angular.module('app.todosFactoryModule', [])
+/* FACTORY MODULE FOR TODOS CONTROLLER */
 
+const todoFactoryModule = angular.module('app.todosFactoryModule', [])
 .factory('todosFactory', ['$http', '$window', '$rootScope', ($http, $window, $rootScope) => {
   // console.log($window.sessionStorage.currentUser)
-  // get all the tasks from server
 
+  // connect to socket
   const socket = io.connect('http://localhost:3000')
+  
+  /*
+    we create a sockets object so we can pass it to the main todos controller
+    inside, we imitate two methods of sockets
+    this part was basically copy pasted :(
+  */
   const sockets = {
     on: (eventName, callback) => {
       socket.on(eventName, function() {
@@ -29,20 +36,24 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
     }
   }
 
-  // socket.on('connect', () => {
-  //   console.log('connected to sockets!')
-  // })
-
+  // get all the tasks from server db
   function getAllTasks() {
     return $http.get(`/api/posts/all/${$window.sessionStorage.current_user}`)
   }
 
-  // update task to the db
+  /*
+     update task to the db
+     emit a socket event that server catches
+     when server catches the event,
+     it takes the response and passes it in another event
+     that event is used it task delegation
+  */
   function putTask(task) {
     socket.emit('taskAdded', task)
     return $http.put(`/api/posts/${task._id}`, task)
   }
 
+  // delete a task from server db
   function deleteTask(task) {
     return $http.delete(`/api/posts/${task._id}`, task)
   }
@@ -52,7 +63,17 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
     return $http.post(`/api/posts`, task)
   }
 
-  // helps in saving the task
+
+  /* 
+    helps in saving the task
+    if we have any value in the add-task input
+    then call addTask function and push last task in todo list to the db
+    if addTask is succesfull then we call getAllTasks function
+    this function returns a promise which we resolve by 
+    updating our todos and users list
+    We do this so we have unique task ID which our DB creates
+    without this ID, it will be difficult to update that particular task
+  */
   function saveTask($scope, dirtyInput) {
     if (dirtyInput.isDirty) {
       // push the last task in the todo list to the db since it is the latest one!
@@ -73,14 +94,30 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
     $scope.createTaskInput = ''
   }
   
-  // does a shallow copying of original todo list
-  // for editing outside of loop
+  /* 
+    does a shallow copying of original todo task from ng-repeat
+    for editing outside of the loop
+    by having a shallow copy, we make sure
+    that if we change anything in it, this will be reflected in the
+    original task
+  */
   function editTask($scope, todo) {
     $scope.editingTask = todo
     $scope.editingTask.initEdit = true
   }
   
-  // updates/edit the task
+  /* 
+    updates/edits the task
+    This function is used in more than one model
+    since it is used in more than one model, 
+    we have to make sure what we are receiving
+    we do this by checking if type of the value passed is not an object
+    If it is not an object and just a value
+    then we copy this value into editing task object to later use it
+    ** see above editTask function for connected info **
+    Otherwise, we simply pass this object to the putTask function
+    this putTask function updates the task in Database
+  */
   function updateTask($scope, taskedited) {
     if (taskedited) {
       // creating deep copy so of taskedited so it can be changed without affecting anything
@@ -108,7 +145,13 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
       .filter(item => item !== todo)
   }
 
-  // delegates task to another user
+  /*
+    delegates task to another user
+    upon selecting a user from delegate to dropdown list
+    we first update the delegateTo key in task object
+    then we close the dropdown menu
+    then we update this modified task in database
+  */
   function delegateTask($scope, task, user) {
     task.delegatedTo = user.username
     $scope.isDropdown = false

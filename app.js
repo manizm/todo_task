@@ -1,7 +1,6 @@
 const express = require('express')
 const path = require('path')
 
-
 const favicon = require('serve-favicon')
 const logger = require('morgan')
 const cookieParser = require('cookie-parser')
@@ -16,10 +15,10 @@ const api = require('./routes/api')
 const authenticate = require('./routes/authenticate')(passport)
 const mongoose = require('mongoose')
 
+// environment variables and path to static folder
 const DIST_DIR = path.resolve(__dirname, 'dist'),
       HTML_FILE = path.resolve(DIST_DIR, 'index.html'),
       isDevelopment = process.env.NODE_ENV !== 'production'
-
 
 
 
@@ -30,7 +29,7 @@ const store = new MongoDBStore({
   collection: 'expressSessions'
 })
 
-// Catch errors
+// Catch errors on session store
 store.on('error', function(err) {
   assert.ifError(err)
   assert.ok(false)
@@ -45,6 +44,12 @@ const app = express();
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
+/*
+  upon connectiont to sockets,
+  check for taskAdded event, fired from todos factory in client
+  if event captured, then emit a new broadcast with the received response
+  capture this broadcaseted event (delegatedTo) on client
+*/
 io.on('connection', (socket) => {
   socket.on('taskAdded', (task) => {
     console.log('IN APP.JS',task)
@@ -63,13 +68,6 @@ app.set('view engine', 'ejs');
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 
-
-/* MIDDLEWARES */
-// use socket as middleware
-// app.use((req, res, next) => {
-//   res.io = io
-//   next()
-// })
 
 // other necessary middlewares for express app
 app.use(logger('dev'))
@@ -156,7 +154,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
 
 
 // Initialize passport

@@ -7,10 +7,6 @@ const express = require('express'),
 
 // this middleware is used for routes that must be authenticated
 function isAuthenticated(req, res, next) {
-  
-  // allow all get requests
-  // if (req.method === 'GET')
-  //     return next()
 
   // if user is authenticated, call next
   if (req.isAuthenticated()){
@@ -26,10 +22,18 @@ function isAuthenticated(req, res, next) {
 // register the authenticate middleware
 router.use('/posts', isAuthenticated)
 
-// api for all posts
 
+/* api for all posts */
 router.route('/posts')
 
+  /*
+    On post request,
+    create a new task instance from Task model,
+    get the information from the request body,
+    store it in task instance
+    save it to db
+    uses promises
+  */
   .post((req, res) => {
     const task = new Task()
     
@@ -43,11 +47,22 @@ router.route('/posts')
     .catch(err => res.status(500).send(err))
   })
 
-// get all the tasks related to a particular user
+
+/* get all the tasks related to a particular user */
 router.route('/posts/all/:id')
+
   .get((req, res) => {
     // console.log(req)
-    console.log(req.params.id)
+    // console.log(req.params.id)
+    /*
+      Uses bluebird's promise api
+      upon get request, create task and user objects
+      get information from DB through id parameter passed in get request
+      store the result from db in Promise.props object
+      it works like es6 promise.all but for object **BOOYAH**
+      then pass the result to the client 
+      otherwise catch error
+    */
     Promise.props(
       {
         task: Task.find({$or:[{username: req.params.id}, {delegatedTo: req.params.id}]}),
@@ -64,10 +79,11 @@ router.route('/posts/all/:id')
     })
   })
 
-// api for specific task
+
+/* api for specific task */
 router.route('/posts/:id')
   
-  // get post
+  // get post By id passed in req parametes - simple
   .get((req, res) => {
     Task.findById(req.params.id)
     .exec()
@@ -76,6 +92,12 @@ router.route('/posts/:id')
   })
 
   //update post
+  /* 
+    Find post by id
+    then update each field of the found task
+    then put the task back in db
+    otherwise catch errors
+  */
   .put((req, res) => {
     Task.findById(req.params.id)
     .exec()
@@ -101,14 +123,19 @@ router.route('/posts/:id')
     .catch(err => res.send(err))
   })
 
-  // get all usernames
+  /*
+    get all usernames
+    these usernames are required by todos list in client side
+    uses promises
+  */
   router.use('/list', isAuthenticated)
   router.route('/list/users')
+  
     .get((req, res) => {
       User.find({}).select({"username": 1})
       .exec()
       .then(users => {
-        console.log('in posts routes for /list success', users)
+        // console.log('in posts routes for /list success', users)
         res.status(200).send(users)
       })
       .catch(err => {
@@ -116,4 +143,5 @@ router.route('/posts/:id')
         res.status(500).send(err)
       })
     })
+    
 module.exports = router

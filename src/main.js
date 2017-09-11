@@ -16,11 +16,18 @@ import './assets/styles/app.style.sass'
 
 
 appModule.run(['$rootScope', '$http', '$window', ($rootScope, $http, $window) => {
+  /* 
+    we set the authenticated flag
+    to be same as we have already set in window object during login process
+    we do this for easy retrieval
+    and reupdating the rootscope upon page refresh
+  */
   $rootScope.authenticated = $window.sessionStorage.authenticated
   // $window.sessionStorage.current_user = ''
   
 }])
 
+// declaring the controllers because of dependency issues D:
 appModule.controller('todosController', ['$scope', 'todosFactory', '$window', todosController])
 appModule.controller('authController', ['$scope', '$http', '$location', '$window', '$rootScope', authController])
 appModule.controller('navcontroller', ['$scope', '$http', '$location', '$window', '$rootScope', navController])

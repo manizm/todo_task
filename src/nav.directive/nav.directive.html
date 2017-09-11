@@ -1,12 +1,14 @@
-<nav class="level navbar">
+<nav class="level navbar">  
   <div class="level-left">
-    <a ng-if="authenticate" 
+    <!-- <a ng-if="authenticate" 
       ui-sref="todos" 
       class="level-item">
         Home
-    </a>
-    <h2 ng-if="!authenticate" class="has-text-centered">Awesome Task App</h2>
+    </a> -->
+    <!-- <h2 ng-if="!authenticate" class="has-text-centered">Awesome Task App</h2> -->
+    <h2 class="has-text-centered">Awesome Task App</h2>
   </div>
+
   <div class="level-right">
     
     <a ng-hide="authenticate"
@@ -33,5 +35,6 @@
        class="level-item is-success">
          Logout
     </a>
+  
   </div>
 </nav>
