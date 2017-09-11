@@ -47,7 +47,8 @@ const io = require('socket.io')(server)
 
 io.on('connection', (socket) => {
   socket.on('taskAdded', (task) => {
-    socket.emit('delegatedTo', task)
+    console.log('IN APP.JS',task)
+    socket.io.emit('delegatedTo', task)
   })
   socket.on('disconnect', () => console.log('user disconnected'))
 })

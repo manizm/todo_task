@@ -40,7 +40,7 @@ router.route('/posts')
     
     task.save()
     .then(task => res.json(task))
-    .catch(res.send(500, err))
+    .catch(err => res.status(500).send(err))
   })
 
 // get all the tasks related to a particular user
@@ -87,8 +87,8 @@ router.route('/posts/:id')
       task.isCompleted = req.body.isCompleted
 
       task.save()
-      .then(res.json(task))
-      .catch(res.send(err))
+      .then(task => res.json(task))
+      .catch(err => res.send(err))
     })
     .catch(err => res.send(err))
   })
