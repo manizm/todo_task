@@ -3,14 +3,31 @@ import io from 'socket.io-client'
 
 const todoFactoryModule = angular.module('app.todosFactoryModule', [])
 
-.factory('todosFactory', ['$http', '$window', ($http, $window) => {
+.factory('todosFactory', ['$http', '$window', '$rootScope', ($http, $window, $rootScope) => {
   // console.log($window.sessionStorage.currentUser)
   // get all the tasks from server
 
-  var sockets = io.connect('http://localhost:3000')
-  sockets.on('connect', () => {
-    console.log('hey! it connected!')
-  })
+  const socket = io.connect('http://localhost:3000')
+  const sockets = {
+    on: (eventName, callback) => {
+      socket.on(eventName, function() {
+        let args = arguments
+        $rootScope.$apply(function() {
+          callback.apply(socket, args)
+        })
+      })
+    },
+    emit: function(eventName, data, callback) {
+      socket.emit(eventName, data, function() {
+        let args = arguments
+        $rootScope.$apply(function() {
+          if (callback) {
+            callback.apply(socket, args)
+          }
+        })
+      })
+    }
+  }
 
   // socket.on('connect', () => {
   //   console.log('connected to sockets!')
@@ -22,6 +39,7 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
 
   // update task to the db
   function putTask(task) {
+    socket.emit('taskAdded', task)
     return $http.put(`/api/posts/${task._id}`, task)
   }
 
@@ -131,6 +149,7 @@ const todoFactoryModule = angular.module('app.todosFactoryModule', [])
   }
 
   return {
+    sockets,
     getAllTasks,
     putTask,
     saveTask,

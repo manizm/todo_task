@@ -11,10 +11,10 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$provi
   $urlRouterProvider.otherwise('/')
   
   // to take care of hashbangs and server routing
-  $provide.decorator('$sniffer', function($delegate) {
+  $provide.decorator('$log',['$sniffer', function($delegate) {
     $delegate.history = false
     return $delegate
-  })
+  }])
 
   $stateProvider
     .state('login', {

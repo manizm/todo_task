@@ -46,7 +46,9 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
 io.on('connection', (socket) => {
-  console.log('connection made')
+  socket.on('taskAdded', (task) => {
+    socket.emit('delegatedTo', task)
+  })
   socket.on('disconnect', () => console.log('user disconnected'))
 })
 
@@ -63,10 +65,10 @@ app.set('view engine', 'ejs');
 
 /* MIDDLEWARES */
 // use socket as middleware
-app.use((req, res, next) => {
-  res.io = io
-  next()
-})
+// app.use((req, res, next) => {
+//   res.io = io
+//   next()
+// })
 
 // other necessary middlewares for express app
 app.use(logger('dev'))

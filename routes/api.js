@@ -39,7 +39,6 @@ router.route('/posts')
     task.task = req.body.task
     
     task.save()
-    .exec()
     .then(task => res.json(task))
     .catch(res.send(500, err))
   })
@@ -87,11 +86,9 @@ router.route('/posts/:id')
       task.task = req.body.task
       task.isCompleted = req.body.isCompleted
 
-      task.save((err, task) => {
-        if (err) {res.send(err)}
-        
-          res.json(task)
-      })
+      task.save()
+      .then(res.json(task))
+      .catch(res.send(err))
     })
     .catch(err => res.send(err))
   })

@@ -1,13 +1,23 @@
+import io from 'socket.io-client'
 export default function($scope, todosFactory, $window) {
   
   // destructuring the todosFactory
-  const { putTask, saveTask, editTask, updateTask, removeTask, delegateTask, watchCreateTaskInput } = todosFactory
+  const { sockets, putTask, saveTask, editTask, updateTask, removeTask, delegateTask, watchCreateTaskInput } = todosFactory
+  
   let dirtyInput = { isDirty: false }
+  
   $scope.isDropdown = false
   $scope.editingTask = {}
+  
   $scope.todos = []
   $scope.users = []
+  
   $scope.currentUser = angular.copy($window.sessionStorage.current_user)
+  
+  sockets.on('delegatedTo', task => {
+    $scope.todos.push(task)
+  })
+
   todosFactory.getAllTasks()
   .then((response) => {
     // console.log(response)
