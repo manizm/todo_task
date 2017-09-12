@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "webpack-dev-server",
     "prod": "npm run clean && cross-env NODE_ENV=production webpack --optimize-minimize",
-    "start": "nodemon ./bin/www",
+    "startdev": "nodemon ./bin/www",
     "startprod": "cross-env NODE_ENV=production nodemon ./bin/www",
+    "start": "cross-env NODE_ENV=production node ./bin/www",
     "clean": "rimraf ./dist/*"
   },
   "repository": {
@@ -86,5 +87,6 @@
     "webpack-dev-server": "^2.7.1",
     "webpack-hot-middleware": "^2.18.2",
     "webpack-node-externals": "^1.6.0"
-  }
+  }, 
+  "engines": {"node": "~6"}
 }
