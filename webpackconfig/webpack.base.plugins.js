@@ -27,6 +27,10 @@ const plugobj = {
   cssConfig: varisProd ? varcssProd : varcssDev,
   
   plugins: [
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -34,9 +38,9 @@ const plugobj = {
       }
     }),
     // new webpack.optimize.UglifyJsPlugin({
-    //   compressor: {
-    //     warnings: false
-    //   }
+    //   compress: true,
+    //   test: /\.js($&#124;\?)/i,
+    //   sourceMap: true
     // }),
 
     new HtmlWebpackPlugin({

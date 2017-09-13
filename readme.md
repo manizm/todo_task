@@ -30,4 +30,6 @@ If you have any suggestions, feel free to shout it out!
 
 4. **For dev server using express** `SET DEBUG=todo-task:* & npm start`
 
-_I would recommend using 3rd command instead of 2nd. Besides, both of them use hot module replacement_
+5. **For production express server** `npm run startprod` OR `npm run start`
+
+~_I would recommend using 3rd command instead of 2nd. Besides, both of them use hot module replacement_~

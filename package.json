@@ -34,7 +34,6 @@
   "homepage": "https://github.com/manizm/todo_task#readme",
   "dependencies": {
     "angular": "^1.6.6",
-    "angular-local-storage": "^0.7.1",
     "angular-ui-router": "^1.0.3",
     "async": "^2.5.0",
     "bcrypt-nodejs": "0.0.3",
@@ -50,7 +49,6 @@
     "moment": "^2.18.1",
     "mongoose": "^4.11.8",
     "morgan": "~1.8.1",
-    "ngstorage": "^0.3.11",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "postcss-loader": "^2.0.6",
@@ -87,6 +85,8 @@
     "webpack-dev-server": "^2.7.1",
     "webpack-hot-middleware": "^2.18.2",
     "webpack-node-externals": "^1.6.0"
-  }, 
-  "engines": {"node": "~6"}
+  },
+  "engines": {
+    "node": "~6"
+  }
 }
