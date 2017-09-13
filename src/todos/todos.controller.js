@@ -42,7 +42,8 @@ export default function($scope, todosFactory, $window) {
     then we push it to the main todos model
   */
   sockets.on('delegatedTo', task => {
-    if ($scope.currentUser === task.delegateTo) {
+    console.log(task)
+    if ($scope.currentUser === task.delegatedTo) {
       $scope.todos.push(task)
     }
   })
