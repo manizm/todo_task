@@ -1,8 +1,8 @@
 const express = require('express'),
       router = express.Router(),
       mongoose = require('mongoose'),
-      Promise = require('bluebird')
-      Task = mongoose.model('Task')
+      Promise = require('bluebird'),
+      Task = mongoose.model('Task'),
       User = mongoose.model('User')
 
 // this middleware is used for routes that must be authenticated
