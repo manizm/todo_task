@@ -9,8 +9,8 @@
 - [x] ~Setup CRUD operations~
 - [x] ~Connect with front-end _(Angular Controllers)_~
 - [x] ~test~
-- [ ] Integrate Socket.io **Q_Q**
-- [ ] Add UglifyJS and fix HMR in express dev
-- [ ] Using global window object to store state.. | FIX in future - use local storage or sessions
+- [x] Integrate Socket.io **Q_Q**
+- [x] Add UglifyJS and fix HMR in express dev
+- [x] Using global window object to store state.. | FIX in future - use local storage or sessions
 - [x] ~Fix production version~
-- [ ] Fingers Crossed!
+- [x] Fingers Crossed!
